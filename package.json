@@ -1,15 +1,16 @@
 {
-  "name":"restapi",
-"version":"1.0.0",
-"description":"",
-"main":"index.js",
-"scripts":{
-  "start":"node App.js",
-  "dev":"nodemon App.js"
-},
-"keywords":[],
-"author": "",
-"license": "ISC",
+  "name": "restapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node App.js",
+    "dev": "nodemon App.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.1",
     "chalk": "^5.1.2",

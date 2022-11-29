@@ -1,23 +1,24 @@
-let express = require("express");
+import express from "express";
+import { createWriteStream } from "fs";
+import { config } from "dotenv";
+import pkg from "body-parser";
+const { urlencoded, json } = pkg;
+import morgan from "morgan";
+import cors from "cors";
+import { MongoClient as _MongoClient, ObjectId } from "mongodb";
+
 let app = express();
-let fs = require("fs");
-let dotenv = require("dotenv");
-dotenv.config();
-let cors = require("cors");
-let mongo = require("mongodb");
-let MongoClient = mongo.MongoClient;
+config();
+let MongoClient = _MongoClient;
 let port = process.env.PORT || 9800;
 let mongoURL = process.env.MongoLive;
-let bodyParser = require("body-parser");
-
-const morgan = require("morgan");
 
 let db;
 // middleware
-app.use(morgan("short", { stream: fs.createWriteStream("./app.logs") }));
+app.use(morgan("short", { stream: createWriteStream("./app.logs") }));
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(urlencoded({ extended: true }));
+app.use(json());
 
 //API//
 app.get("/", (req, res) => {
@@ -192,7 +193,7 @@ res.send(`Order Updated!`);
 
 //API to delete orders
 app.delete('/deleteOrder/:id',(req,res)=>{
-  let _id = mongo.ObjectId(req.params.id);
+  let _id = ObjectId(req.params.id);
   db.collection('orders').deleteOne({_id},(err,result)=>{
     if(err) throw err;
     res.send("Order Deleted!");
